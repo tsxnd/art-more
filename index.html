@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>美術鑑賞の手引き</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --paper: light-dark(#f6f3eb, #191816);
+      --ink: light-dark(#27231f, #eee8dc);
+      --line: light-dark(#bcb0a0, #60564c);
+      --accent: light-dark(#81472f, #e7ad8c);
+      --hover: light-dark(#eee7da, #2a2520);
+    }
+    :root[data-theme="light"] { color-scheme: light; }
+    :root[data-theme="dark"] { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: system-ui, sans-serif;
+      line-height: 1.55;
+    }
+    main {
+      max-width: 52rem;
+      margin: 0 auto;
+      padding: clamp(2rem, 9vw, 6rem) clamp(1.25rem, 5vw, 3rem);
+    }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: .75rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    h1, .page-title {
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif CJK JP", serif;
+      font-weight: 700;
+    }
+    h1 { margin: 0; font-size: clamp(1.5rem, 5vw, 2.5rem); }
+    select {
+      padding: .45rem .65rem;
+      border: 1px solid var(--line);
+      border-radius: .25rem;
+      background: var(--paper);
+      color: var(--ink);
+      font: inherit;
+    }
+    ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    li { border-bottom: 1px solid var(--line); }
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.15rem .65rem;
+      color: inherit;
+      text-decoration: none;
+    }
+    a:hover { background: var(--hover); color: var(--accent); }
+    a:focus-visible, select:focus-visible { outline: 2px solid var(--accent); }
+    .page-title { font-size: clamp(1.1rem, 3.5vw, 1.45rem); }
+    .arrow { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>美術鑑賞の手引き</h1>
+      <select id="theme" aria-label="表示テーマ" hidden>
+        <option value="system">端末に合わせる</option>
+        <option value="light">ライト</option>
+        <option value="dark">ダーク</option>
+      </select>
+    </header>
+    <nav aria-label="鑑賞ページ">
+      <ul role="list">
+        <li><a href="./聖書の名場面 — 美術鑑賞のための手引き.html"><span class="page-title">聖書の名場面</span><span class="arrow" aria-hidden="true">→</span></a></li>
+        <li><a href="./オウィディウス『変身物語』— 美術鑑賞のための手引き.html"><span class="page-title">オウィディウス『変身物語』</span><span class="arrow" aria-hidden="true">→</span></a></li>
+        <li><a href="./ダンテ『神曲』— 美術鑑賞のための手引き.html"><span class="page-title">ダンテ『神曲』</span><span class="arrow" aria-hidden="true">→</span></a></li>
+        <li><a href="./絵画になった古代の歴史と伝承.html"><span class="page-title">絵画になった古代の歴史と伝承</span><span class="arrow" aria-hidden="true">→</span></a></li>
+      </ul>
+    </nav>
+  </main>
+  <script>
+    const themeSelect = document.querySelector('#theme');
+    const themeKey = 'art-more-index-theme';
+    let savedTheme;
+    try {
+      savedTheme = localStorage.getItem(themeKey);
+    } catch {
+      // Storage may be unavailable when the page is opened as a local file.
+    }
+    if (savedTheme === 'light' || savedTheme === 'dark') {
+      themeSelect.value = savedTheme;
+      document.documentElement.dataset.theme = savedTheme;
+    }
+    themeSelect.hidden = false;
+    themeSelect.addEventListener('change', () => {
+      document.documentElement.dataset.theme = themeSelect.value;
+      try {
+        localStorage.setItem(themeKey, themeSelect.value);
+      } catch {
+        // The theme still applies for this visit.
+      }
+    });
+  </script>
+</body>
+</html>
